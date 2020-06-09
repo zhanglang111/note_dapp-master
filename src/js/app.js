@@ -94,7 +94,10 @@ App = {
 
   loadNote: function(index) {
 
+    //获取到这个账户
     App.noteIntance.notes(App.account, index).then(function(note) {
+
+      //注意id是不一样的
       $("#notes").append(
       '<div class="form-horizontal"> <div class="form-group"><div class="col-sm-8 col-sm-push-1 ">' + 
       ' <textarea class="form-control" id="note'+ 
@@ -104,6 +107,7 @@ App = {
       + '</textarea></div>'
       +  '</div> </div>');
       if (index -1 >= 0) {
+        //递归使用这个函数
         App.loadNote(index - 1);
       } else {
         App.adjustHeight();
