@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/layui.css" rel="stylesheet">
+    <script src="js/layui.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/MyTask.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/avalon.min.js"></script>
+    <script type="text/javascript" src="js/avalon.min.js"></script>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+    <ul class="layui-nav" lay-filter="">
+        <li class="layui-nav-item"><a href="index.html">首页</a></li>
+        <li class="layui-nav-item layui-this"><a href="MyTask.html">我的任务</a></li>
+        <li class="layui-nav-item"><a href="SystemTasklit.html">系统任务列表</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">解决方案</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a href="">移动模块</a></dd>
+                <dd><a href="">后台模版</a></dd>
+                <dd><a href="">电商平台</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="">社区</a></li>
+    </ul>
+
+
+    <div style="height: 595px;width: 100%;padding: 0 20px 0;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">系统任务列表</h3>
+            </div>
+            <div class="panel-body" style="overflow-y: auto;height: 545px;" ms-controller="taskList">
+                <div class="list-group">
+                    <a href="#" class="list-group-item" ms-for="el in @data">
+                        <h4 class="list-group-item-heading">
+                            <span class="label label-success" ms-if="el.status==1">未完成</span>
+                            <span class="label label-danger" ms-if="el.status==3">已完成</span>
+                            <span class="label label-warning" ms-if="el.status==2">已撤销</span>
+                            {{el.name}}
+                        </h4>
+                        <p class="list-group-item-text">合约地址: <span style="color: #3498db">{{el.contract}}</span></p>
+                        <p class="list-group-item-text">任务描述: {{el.description}}</p>
+                        <button type="button" class="btn btn-primary taskDetailInfo" style="position: absolute;right: 10px;top: 10px">查看细节</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <button type="button" class="btn btn-primary" id="clickToAppear" style="display: none" data-toggle="modal" data-target="#myModal"></button>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ms-controller="singleTask">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><span class="label label-success" ms-if="@data.status==1">Unfinished</span>
+                        <span class="label label-danger" ms-if="@data.status==3">Finished</span>
+                        <span class="label label-warning" ms-if="@data.status==2">Aborted</span>
+                        {{@data.name}}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <dl class="dl-horizontal">
+                        <dt>Requester's Address</dt>
+                        <dd>{{@data.requester}}</dd>
+                        <dt>Contract Address</dt>
+                        <dd>{{@data.contract}}</dd>
+                        <dt>Task Description</dt>
+                        <dd>{{@data.description}}</dd>
+                        <dt># Required Data</dt>
+                        <dd>{{@data.rewardNum}}</dd>
+                        <dt># Collected Data</dt>
+                        <dd>{{@data.dataCount}}</dd>
+                        <dt>Task Rewards</dt>
+                        <dd>{{@data.rewardUnit}} Wei</dd>
+                    </dl>
+                    <hr>
+                    <strong>Contract ABI</strong>
+                    <pre>
+{{@data.abi}}
+              </pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="acceptTask">Accept Task</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</body>
+<script>
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //…
+    });
+</script>
+</html>

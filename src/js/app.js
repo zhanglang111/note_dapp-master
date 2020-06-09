@@ -130,19 +130,19 @@ App = {
       });
     });
 
-    $("#notes").on('click', "button", function() {
-      var cindex = $(this).attr("index");
-      var noteid = "#note" + cindex
-      var note = $(noteid).val();
-      console.log(note);
-
-      
-      App.noteIntance.modifyNote(App.account, cindex, note).then(
-        function(result) {
-          return App.getNotes();
-        }
-      ); 
-    });
+    // $("#notes").on('click', "button", function() {
+    //   var cindex = $(this).attr("index");
+    //   var noteid = "#note" + cindex
+    //   var note = $(noteid).val();
+    //   console.log(note);
+    //
+    //
+    //   App.noteIntance.modifyNote(App.account, cindex, note).then(
+    //     function(result) {
+    //       return App.getNotes();
+    //     }
+    //   );
+    // });
   }, 
 
   watchChange: function() {
@@ -156,7 +156,10 @@ App = {
   getAccountParam: function() {
     var reg = new RegExp("(^|&)account=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]); return null;
+    if (r != null)
+      localStorage.setItem("defaultAccount",r);
+      return unescape(r[2]);
+    return null;
   },
 
 };
