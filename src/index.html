@@ -1,63 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>车车互助链</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/layui.css" rel="stylesheet">
-    <script type="text/javascript" src="js/avalon.min.js"></script>
-  </head>
-  <body>
-        <ul class="layui-nav" lay-filter="">
-          <li class="layui-nav-item"><a href="index.html">首页</a></li>
-          <li class="layui-nav-item layui-this"><a href="MyTask.html">我的任务</a></li>
-          <li class="layui-nav-item"><a href="SystemTasklit.html">系统任务列表</a></li>
-          <li class="layui-nav-item">
-            <a href="javascript:;">解决方案</a>
-            <dl class="layui-nav-child"> <!-- 二级菜单 -->
-              <dd><a href="">移动模块</a></dd>
-              <dd><a href="">后台模版</a></dd>
-              <dd><a href="">电商平台</a></dd>
-            </dl>
-          </li>
-          <li class="layui-nav-item"><a href="">社区</a></li>
-        </ul>
-
-      <div class="form-horizontal" style="margin-top: 50px">
-        <div class="form-group">
-          <div class="col-sm-8 col-sm-push-1 ">
-            <textarea class="form-control" id="new_note" ></textarea>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>VehiclehHelpChain</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <style type="text/css">pre{white-space: pre-wrap;word-wrap: break-word;}</style>
+</head>
+<body style="overflow: hidden;">
+<div class="jumbotron" style="margin-bottom: 0">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="container">
+        <h1>VehiclehHelpChain <span class="label label-info" style="font-size: 16px">alpha</span></h1>
+        <p>一个专注与车辆间互助的区块链平台</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="container">
+        <form class="form-signin">
+          <h2 class="form-signin-heading">Create a new account</h2>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+          <label for="repeatPassword" class="sr-only">Repeat password</label>
+          <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat password" required="">
+          <div class="checkbox">
+            <a href="./index.html"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Import your existing account(s)</a>
           </div>
-          <button for="new_note" class="btn btn-primary col-sm-1 col-sm-push-1" id="add_new">添加笔记</button>
+          <button class="btn btn-lg btn-primary btn-block" type="button" id="signup">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin: auto 5px">
+  <div class="col-md-6">
+    <h3><span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span> Block List</h3>
+    <div style="overflow-y: auto;height: 295px" ms-controller="blocks">
+      <!-- blocks repeat -->
+      <div class="row" style="margin:15px 10px 15px 0;" ms-for="el in @data">
+        <div class="col-md-4" style="background-color: gray;color: white;height: 80px;text-align: center">
+          <p style="margin-top: 15px"># Block {{el.order}}</p>
+          <p>UTC {{el.time}}</p>
+        </div>
+        <div class="col-md-8">
+          <p>Mined By <a style="color: #3498db">{{el.miner | truncate(30,'...')}}</a></p>
+          <p>Block Size <strong style="color: #3498db">{{el.size}}</strong> bytes for <strong style="color: #3498db">{{el.txns}}</strong> txns</p>
+          <p style="margin-bottom: 0">Block Hash <a style="color: #3498db">{{el.hash | truncate(30,'...')}}</a></p>
         </div>
       </div>
-
-      <div id="notes" style="margin-top: 30px">
-
-      </div>
-
     </div>
-    <div class="row">
-    
   </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/web3.min.js"></script>
-    <script src="js/truffle-contract.js"></script>
-    <script src="js/app.js"></script>
-      <script src="js/layui.js"></script>
-  </body>
+  <div class="col-md-6">
+    <h3><span class="glyphicon glyphicon-xbt" aria-hidden="true"></span> Transaction List</h3>
+    <div style="overflow-y: auto;height: 295px" ms-controller="txns">
+      <!-- txns repeat -->
+      <div class="row" style="height: 80px;margin:15px 10px 15px 0;" ms-for="el in @data">
+        <div class="col-md-8">
+          <p style="margin-bottom: 0">TX# <a style="color: #3498db">{{el.txn | truncate(30,'...')}}</a></p>
+          <p style="margin-bottom: 0">From <a style="color: #3498db">{{el.sender | truncate(30,'...')}}</a> to <a style="color: #3498db">{{el.receiver | truncate(30,'...')}}</a></p>
+          <p style="margin-bottom: 0">Amount {{el.amount}} Ether</p>
+        </div>
+        <div class="col-md-4" style="text-align: right">
+          <p>> {{el.time}} min ago</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<!-- Insert this line above script imports  -->
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script type="text/javascript" src="js/web3.min.js"></script>
+<script type="text/javascript" src="js/avalon.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src  ="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/sweetalert2.all.min.js"></script>
+<script type="text/javascript" src="index.js"></script>
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
 
 
-  <script>
-    layui.use('element', function(){
-      var element = layui.element;
-
-      //…
-    });
-  </script>
 </html>

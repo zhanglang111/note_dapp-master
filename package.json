@@ -1,21 +1,25 @@
 {
-  "name": "pet-shop",
+  "name": "VehiclehHelpChain",
   "version": "1.0.0",
   "description": "",
-  "main": "truffle.js",
+  "main": "./src/index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "dev": "lite-server",
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "electron": "9.0.3",
     "lite-server": "^2.3.0"
   },
   "dependencies": {
+    "fs": "0.0.1-security",
+    "ipfs": "^0.46.0",
+    "solc": "^0.6.9",
     "truffle-hdwallet-provider": "^1.0.5"
   }
 }
