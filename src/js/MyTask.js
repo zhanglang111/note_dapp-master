@@ -7,15 +7,15 @@ if (typeof web3 !== 'undefined') {
     web3 = new Web3(web3.currentProvider);
 } else {
     // set the provider you want from Web3.providers
-    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
     web3.eth.defaultAccount = localStorage.getItem("defaultAccount");
 }
 
-console.log(web3.eth.defaultAccount);
+console.log("web3.eth.defaultAccount:"+web3.eth.defaultAccount);
 
 
-var taskManagement = web3.eth.contract(JSON.parse(taskManager.abi));
-var taskManagementContract = taskManagement.at(taskManager.address);
+var taskManagement = web3.eth.contract(JSON.parse(TaskManagement.abi));
+var taskManagementContract = taskManagement.at(TaskManagerment.address);
 
 
 //这是搜集所有 的意思吗

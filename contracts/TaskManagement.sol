@@ -16,7 +16,7 @@ contract TaskManagement{
     //自身管理的所有的任务
     event taskList(address contra, string taskabi, string taskName, string taskDescrip);
 
-    function addTask(address contra, string taskabi, string taskName, string taskDescrip)
+    function addTask(address contra, string memory taskabi, string memory taskName, string memory taskDescrip)
     public
     {
         //还没有上链的任务的state是0
