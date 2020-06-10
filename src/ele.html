@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+    <script type="application/javascript" src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/layui.css">
+    <script type="application/javascript" src="js/layui.js"></script>
+</head>
+<body>
+<div class="layui-main" style="margin-bottom: 30px;margin-top: 20px">
+    <ul class="layui-nav" lay-filter="bigData">
+        <li class="layui-nav-item"><a href="">最新活动</a></li>
+        <li class="layui-nav-item layui-this"><a href="">产品</a></li>
+        <li class="layui-nav-item"><a href="">大数据</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">解决方案</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a href="">移动模块</a></dd>
+                <dd><a href="">后台模版</a></dd>
+                <dd><a href="">电商平台</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="">社区</a></li>
+    </ul>
+</div>
+<div class="layui-main" style="margin-bottom: 30px;">
+    <div class="layui-tab" lay-filter="test">
+        <ul class="layui-tab-title">
+            <li class="layui-this">网站设置</li>
+            <li>用户管理</li>
+            <li>权限分配</li>
+            <li>商品管理</li>
+            <li>订单管理</li>
+        </ul>
+        <div class="layui-tab-content" style=" height: 120px;width: 100%;">
+            <div class="layui-tab-item">网站设置</div>
+            <div class="layui-tab-item">用户管理</div>
+            <div class="layui-tab-item">权限分配</div>
+            <div class="layui-tab-item">商品管理</div>
+            <div class="layui-tab-item">订单管理</div>
+        </div>
+    </div>
+</div>
+<div class="layui-main" style="margin-bottom: 30px;margin-top: 20px">
+    <div class="layui-collapse" lay-filter="collapseFilter" lay-accordion>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">杜甫</h2>
+            <div class="layui-colla-content layui-show">
+                杜甫的思想核心是儒家的仁政思想，他有“致君尧舜上，再使风俗淳”的宏伟抱负。杜甫虽然在世时名声并不显赫，但后来声名远播，
+                对中国文学和日本文学都产生了深远的影响。杜甫共有约1500首诗歌被保留了下来，大多集于《杜工部集》。
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">李清照</h2>
+            <div class="layui-colla-content">
+                李清照出生于书香门第，早期生活优裕，其父李格非藏书甚富，她小时候就在良好的家庭环境中打下文学基础。出嫁后与夫赵明诚共同致力于书画金石的搜集整理。
+                金兵入据中原时，流寓南方，境遇孤苦。所作词，前期多写其悠闲生活，后期多悲叹身世，情调感伤。形式上善用白描手法，自辟途径，语言清丽。
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">杜甫</h2>
+            <div class="layui-colla-content">
+                鲁迅一生在文学创作、文学批评、思想研究、文学史研究、翻译、美术理论引进、基础科学介绍和古籍校勘与研究等多个领域具有重大贡献。
+                他对于五四运动以后的中国社会思想文化发展具有重大影响，蜚声世界文坛，尤其在韩国、日本思想文化领域有极其重要的地位和影响，被誉为“二十世纪东亚文化地图上占最大领土的作家”。
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layui-main" style="margin-bottom: 30px;margin-top: 20px">
+    <div class="layui-progress layui-progress-big" lay-filter="demo" lay-showPercent="true">
+        <div class="layui-progress-bar layui-bg-blue" lay-percent="20%"></div>
+    </div>
+    <div class="site-demo-button" style="margin-top: 20px; margin-bottom: 0;">
+        <button class="layui-btn site-demo-active" data-type="setPercent">设置50%</button>
+        <!-- <button class="layui-btn site-demo-active" data-type="loading">模拟loading</button>-->
+    </div>
+</div>
+<script>
+    layui.use('element',function () {
+//实例化element
+        var element = layui.element();
+//初始化动态元素，一些动态生成的元素如果不设置初始化，将不会有默认的动态效果
+        element.init();
+//导航条点击监听
+        element.on('nav(bigData)',function (elem) {
+            console.log(elem);
+        });
+//tab切换监听
+        element.on('tab(test)',function (data) {
+            console.log(data);
+        });
+//手风琴折叠面板开启关闭监听
+        element.on('collapse(collapseFilter)',function (data) {
+            console.log(data.show);
+            console.log(data.title);
+            console.log(data.content)
+        });
+//触发的事件
+        var active = {
+            setPercent: function () {
+//设置50%进度
+                element.progress('demo', '50%')
+            }
+        }
+//点击事件的监听
+        $('.site-demo-active').on('click', function(){
+            var othis = $(this);
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+    })
+</script>
+</body>
+</html>

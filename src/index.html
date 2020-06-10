@@ -8,7 +8,6 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/layui.css" rel="stylesheet">
     <script type="text/javascript" src="js/avalon.min.js"></script>
-    <script type="text/javascript" src="js/avalon.min.js"></script>
   </head>
   <body>
         <ul class="layui-nav" lay-filter="">
@@ -26,13 +25,17 @@
           <li class="layui-nav-item"><a href="">社区</a></li>
         </ul>
 
-      <div class="form-horizontal">
+      <div class="form-horizontal" style="margin-top: 50px">
         <div class="form-group">
           <div class="col-sm-8 col-sm-push-1 ">
             <textarea class="form-control" id="new_note" ></textarea>
           </div>
           <button for="new_note" class="btn btn-primary col-sm-1 col-sm-push-1" id="add_new">添加笔记</button>
         </div>
+      </div>
+
+      <div id="notes" style="margin-top: 30px">
+
       </div>
 
     </div>

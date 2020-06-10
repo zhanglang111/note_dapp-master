@@ -74,7 +74,7 @@ App = {
       App.noteLength = len;
       if (len > 0) {
         App.loadNote( len - 1);
-      } 
+      }
 
     }).catch(function(err) {
       console.log(err.message);
@@ -82,32 +82,28 @@ App = {
   },
 
   adjustHeight: function() {
-    console.log("reset height");  
+    console.log("reset height");
     $('textarea').each(function () {
       console.log("reset height");
-           this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-        }).on('input', function () {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-        })
-  }, 
+      this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+    }).on('input', function () {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    })
+  },
 
   loadNote: function(index) {
 
-    //获取到这个账户
     App.noteIntance.notes(App.account, index).then(function(note) {
-
-      //注意id是不一样的
       $("#notes").append(
-      '<div class="form-horizontal"> <div class="form-group"><div class="col-sm-8 col-sm-push-1 ">' + 
-      ' <textarea class="form-control" id="note'+ 
-      + index
-      + '" >' 
-      + note
-      + '</textarea></div>'
-      +  '</div> </div>');
+          '<div class="form-horizontal"> <div class="form-group"><div class="col-sm-8 col-sm-push-1 ">' +
+          ' <textarea class="form-control" id="note'+
+          + index
+          + '" >'
+          + note
+          + '</textarea></div>'
+          +  '</div> </div>');
       if (index -1 >= 0) {
-        //递归使用这个函数
         App.loadNote(index - 1);
       } else {
         App.adjustHeight();
@@ -124,42 +120,39 @@ App = {
       $("#loader").show();
 
       App.noteIntance.addNote($("#new_note").val()).then(function(result) {
-         return App.watchChange();
+        return App.watchChange();
       }).catch(function (err) {
         console.log(err.message);
       });
     });
 
-    // $("#notes").on('click', "button", function() {
-    //   var cindex = $(this).attr("index");
-    //   var noteid = "#note" + cindex
-    //   var note = $(noteid).val();
-    //   console.log(note);
-    //
-    //
-    //   App.noteIntance.modifyNote(App.account, cindex, note).then(
-    //     function(result) {
-    //       return App.getNotes();
-    //     }
-    //   );
-    // });
-  }, 
+    $("#notes").on('click', "button", function() {
+      var cindex = $(this).attr("index");
+      var noteid = "#note" + cindex
+      var note = $(noteid).val();
+      console.log(note);
+
+
+      App.noteIntance.modifyNote(App.account, cindex, note).then(
+          function(result) {
+            return App.getNotes();
+          }
+      );
+    });
+  },
 
   watchChange: function() {
-      var infoEvent = App.noteIntance.NewNote();
-      return infoEvent.watch(function (err, result) {
-        console.log("reload");
-        window.location.reload();
-      });
-  }, 
+    var infoEvent = App.noteIntance.NewNote();
+    return infoEvent.watch(function (err, result) {
+      console.log("reload");
+      window.location.reload();
+    });
+  },
 
   getAccountParam: function() {
     var reg = new RegExp("(^|&)account=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null)
-      localStorage.setItem("defaultAccount",r);
-      return unescape(r[2]);
-    return null;
+    if (r != null) return unescape(r[2]); return null;
   },
 
 };
