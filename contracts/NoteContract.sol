@@ -1,7 +1,8 @@
 pragma solidity ^0.5.0;
 
 contract NoteContract {
-    
+
+    //一个地址有多个笔记
     mapping(address => string [] ) public notes;
 
     constructor() public {
@@ -12,7 +13,7 @@ contract NoteContract {
     event ModifyNote(address, uint index);
 
     function addNote( string memory note) public {
-    
+        //这是把数据存入了把
         notes[msg.sender].push(note);
         emit NewNote(msg.sender, note);
     }

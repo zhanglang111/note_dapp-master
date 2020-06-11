@@ -2,7 +2,7 @@ App = {
   web3Provider: null,
   contracts: {},
   account: null,
-  noteIntance: null,
+  noteIntance: null,//拿到合约的示例
   noteLength : 0,
 
   init: async function() {
@@ -29,9 +29,16 @@ App = {
     }
     // If no injected web3 instance is detected, fall back to Ganache
     else {
-      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:9545');
+      App.web3Provider = new Web3.providers.HttpProvider('http://127.0.0.1:7545');
     }
     web3 = new Web3(App.web3Provider);
+
+    web3.eth.getBlock(11, function(error, result){
+      if(!error)
+        console.log(result)
+      else
+        console.error(error);
+    })
 
     var account = App.getAccountParam();
 
@@ -49,6 +56,7 @@ App = {
   initAccount: function() {
     web3.eth.getAccounts(function(error, accounts) {
       App.account = accounts[0];
+      console.log(App.account);
     });
   },
 
@@ -70,6 +78,7 @@ App = {
   getNotes: function() {
     App.noteIntance.getNotesLen(App.account).then(function(len) {
       $("#loader").hide();
+      $("#account").html("<b>一共有<b>"+len+"<b>条笔记</b>");
       console.log(len + " 条笔记");
       App.noteLength = len;
       if (len > 0) {
@@ -92,8 +101,10 @@ App = {
         })
   }, 
 
-  loadNote: function(index) {
 
+  //这个地方实现出来,index = 1,将自己申请的显示出来，现在的问题是这个数据有没有保存在区块链上，别人怎么去获得这个数据的。
+  loadNote: function(index) {
+    //notes是一个属性
     App.noteIntance.notes(App.account, index).then(function(note) {
       $("#notes").append(
       '<div class="form-horizontal"> <div class="form-group"><div class="col-sm-8 col-sm-push-1 ">' + 
@@ -104,6 +115,7 @@ App = {
       + '</textarea></div>'
       +  '</div> </div>');
       if (index -1 >= 0) {
+        //通过递归做出来
         App.loadNote(index - 1);
       } else {
         App.adjustHeight();
@@ -114,6 +126,7 @@ App = {
 
   },
 
+  //绑定事件
   bindEvents: function() {
     $("#add_new").on('click', function() {
       console.log(" click ");
@@ -141,10 +154,13 @@ App = {
     });
   }, 
 
+  //事件监听
   watchChange: function() {
       var infoEvent = App.noteIntance.NewNote();
+      //点击增加的时候就会触发 notes[address] = string 但是这个有没有加入到区块链呢？ 然后读取这个/
       return infoEvent.watch(function (err, result) {
         console.log("reload");
+        //重新加载页面
         window.location.reload();
       });
   }, 
