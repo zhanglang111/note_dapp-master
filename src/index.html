@@ -25,9 +25,30 @@
 <h2 id="account">hello world</h2>
 
 <button type="button" class="btn btn-info" style="display: block;margin-bottom: 20px;" data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发布新任务</button>
+<div style="height: 595px;width: 40%;padding: 0 20px 0;float:left;">
 
-<div id="carInfos">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">已发布的任务</h3>
+    </div>
+    <div class="panel-body" style="overflow-y: auto;height: 490px;" ms-controller="taskList">
+      <div class="list-group">
+      </div>
+    </div>
+  </div>
+</div>
 
+<div style="height: 595px;width: 40%;padding: 0 20px 0;float:left;">
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">系统任务列表</h3>
+    </div>
+    <div class="panel-body" style="overflow-y: auto;height: 490px;" ms-controller="taskList">
+      <div class="list-group">
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- 新建任务弹出框 -->
@@ -73,8 +94,6 @@
     </div>
   </div>
 </div>
-
-
 
 
 </body>

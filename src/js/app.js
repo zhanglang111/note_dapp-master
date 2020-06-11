@@ -68,7 +68,7 @@ App = {
 
   getCarInfo: function() {
     App.noteIntance.getCarInfoLen(App.account).then(function(len) {
-      $("#account").html("<b>一共有<b>"+len+"<b>条笔记</b>");
+      $("#account").html("<b>一共有<b>"+len+"<b>条任务</b>");
       App.noteLength = len;
       if (len > 0) {
         App.loadCarInfo( len - 1);
@@ -87,21 +87,28 @@ App = {
         this.style.height = 'auto';
         this.style.height = (this.scrollHeight) + 'px';
         })
-  }, 
-
+  },
 
   //这个地方实现出来,index = 1,将自己申请的显示出来，现在的问题是这个数据有没有保存在区块链上，别人怎么去获得这个数据的。
   //显示效果，_name,_description,_reward,_waitTime,_longitude,_latitude)
   loadCarInfo: function(index) {
     App.noteIntance.CarInfos(App.account, index).then(function(CarInfo) {
-      $("#carInfos").append(
-      '<div class="form-horizontal"> <div class="form-group"><div class="col-sm-8 col-sm-push-1 ">' + 
-      ' <textarea class="form-control" id="note'+ 
-      + index
-      + '" >' 
-      + CarInfo[0]+CarInfo[1]+CarInfo[2]+CarInfo[3]+CarInfo[4]+CarInfo[5]
-      + '</textarea></div>'
-      +  '</div> </div>');
+      $(".list-group").append(
+          '<a href="#" class="list-group-item" style="margin-top: 20px"> ' +
+            '<span class="list-group-item-text"> 合约名字:' +CarInfo[0]+
+              '</span>' +
+          '<span class="list-group-item-text"> 合约描述:' +CarInfo[1]+
+          '</span>' +
+          '<span class="list-group-item-text"> 合约奖励:' +CarInfo[2]+
+          '</span>' +
+          '</br>'+
+          '<span class="list-group-item-text"> 等待时间:' +CarInfo[3]+
+          '</span>' +
+          '<span class="list-group-item-text"> 车辆经度:' +CarInfo[4]+
+          '</span>' +
+          '<span class="list-group-item-text"> 车辆维度:' +CarInfo[5]+
+          '</span>' +
+           '</a>');
       if (index -1 >= 0) {
         //通过递归做出来
         App.loadCarInfo(index - 1);
@@ -140,7 +147,7 @@ App = {
         }
       ); 
     });
-  }, 
+  },
 
   //事件监听
   watchChange: function() {
