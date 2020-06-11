@@ -1,5 +1,5 @@
-var Note = artifacts.require("./NoteContract.sol");
+var CarInfo = artifacts.require("./CarContract.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Note);
+  deployer.deploy(CarInfo);
 };

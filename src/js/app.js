@@ -10,8 +10,6 @@ App = {
   },
 
   initWeb3: async function() {
-
-    // Modern dapp browsers...
     if (window.ethereum) {
       App.web3Provider = window.ethereum;
       try {
@@ -29,16 +27,9 @@ App = {
     }
     // If no injected web3 instance is detected, fall back to Ganache
     else {
-      App.web3Provider = new Web3.providers.HttpProvider('http://127.0.0.1:7545');
+      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
     web3 = new Web3(App.web3Provider);
-
-    web3.eth.getBlock(11, function(error, result){
-      if(!error)
-        console.log(result)
-      else
-        console.error(error);
-    })
 
     var account = App.getAccountParam();
 
@@ -61,13 +52,13 @@ App = {
   },
 
   initContract: function() {
-    $.getJSON('NoteContract.json', function(data) {
+    $.getJSON('CarContract.json', function(data) {
       App.contracts.noteContract = TruffleContract(data);
       App.contracts.noteContract.setProvider(App.web3Provider);
 
       App.contracts.noteContract.deployed().then(function(instance) {
         App.noteIntance = instance;
-        return App.getNotes();
+        return App.getCarInfo();
       });
 
     });
@@ -75,16 +66,13 @@ App = {
     return App.bindEvents();
   },
 
-  getNotes: function() {
-    App.noteIntance.getNotesLen(App.account).then(function(len) {
-      $("#loader").hide();
+  getCarInfo: function() {
+    App.noteIntance.getCarInfoLen(App.account).then(function(len) {
       $("#account").html("<b>一共有<b>"+len+"<b>条笔记</b>");
-      console.log(len + " 条笔记");
       App.noteLength = len;
       if (len > 0) {
-        App.loadNote( len - 1);
-      } 
-
+        App.loadCarInfo( len - 1);
+      }
     }).catch(function(err) {
       console.log(err.message);
     });
@@ -103,20 +91,20 @@ App = {
 
 
   //这个地方实现出来,index = 1,将自己申请的显示出来，现在的问题是这个数据有没有保存在区块链上，别人怎么去获得这个数据的。
-  loadNote: function(index) {
-    //notes是一个属性
-    App.noteIntance.notes(App.account, index).then(function(note) {
-      $("#notes").append(
+  //显示效果，_name,_description,_reward,_waitTime,_longitude,_latitude)
+  loadCarInfo: function(index) {
+    App.noteIntance.CarInfos(App.account, index).then(function(CarInfo) {
+      $("#carInfos").append(
       '<div class="form-horizontal"> <div class="form-group"><div class="col-sm-8 col-sm-push-1 ">' + 
       ' <textarea class="form-control" id="note'+ 
       + index
       + '" >' 
-      + note
+      + CarInfo[0]+CarInfo[1]+CarInfo[2]+CarInfo[3]+CarInfo[4]+CarInfo[5]
       + '</textarea></div>'
       +  '</div> </div>');
       if (index -1 >= 0) {
         //通过递归做出来
-        App.loadNote(index - 1);
+        App.loadCarInfo(index - 1);
       } else {
         App.adjustHeight();
       }
@@ -128,11 +116,11 @@ App = {
 
   //绑定事件
   bindEvents: function() {
-    $("#add_new").on('click', function() {
+    $("#publishTask").on('click', function() {
       console.log(" click ");
       $("#loader").show();
 
-      App.noteIntance.addNote($("#new_note").val()).then(function(result) {
+      App.noteIntance.addCarInfo($("#name").val(),$("#description").val(),$("#reward").val(),$("#waitTime").val(),$("#longitude").val(),$("#latitude").val()).then(function(result) {
          return App.watchChange();
       }).catch(function (err) {
         console.log(err.message);
@@ -156,7 +144,7 @@ App = {
 
   //事件监听
   watchChange: function() {
-      var infoEvent = App.noteIntance.NewNote();
+      var infoEvent = App.noteIntance.NewCarInfo();
       //点击增加的时候就会触发 notes[address] = string 但是这个有没有加入到区块链呢？ 然后读取这个/
       return infoEvent.watch(function (err, result) {
         console.log("reload");
