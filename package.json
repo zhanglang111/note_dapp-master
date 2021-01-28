@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "9.0.3",
+    "electron": "9.4.0",
     "lite-server": "^2.3.0"
   },
   "dependencies": {
